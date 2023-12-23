@@ -1,0 +1,71 @@
+img{
+    height: 20px;
+}
+body{
+    background-color: black;
+    position: fixed;
+    left: 1500px;
+    top: 400px;
+}
+hr{
+    height: 1px;
+    background: #c2c2c2;
+    margin: 5px;
+}
+span{
+    display: block;
+    width: 40px;
+    margin: auto;
+    font-size: 40px;
+    margin-top: -35px;
+    background-color: #fff;
+}
+*{
+    margin: 20px
+}
+#myset{
+    padding-left: 50px;
+}
+img{
+    height:45px ;
+    width:40px ;
+    margin:0.1px ;
+
+}
+button{
+ border-radius:50px ;
+ height: 50px;
+ width: 400px;
+}
+input{
+    height: 50px;
+    width: 300px;
+}
+#myschool{
+    color: white;
+    padding-left: 30px;
+     font-size:40px ;
+}
+#myset{
+    padding-left:90px ;
+}
+#myclass6{
+    color: #fff;
+    padding-left: 25px;
+    font-size: 30px;
+}
+#myvivid{
+    background-color: white;
+    color: white;
+    height: 40px;
+    width: 80px;
+}
+b{
+    height: 1000px;
+}
+#nyson{
+    padding-right: 20px;
+}
+#myabs{
+    padding-right: 10px;
+}
