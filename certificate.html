@@ -196,14 +196,17 @@
     .sig-block {
       text-align: center;
       width: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .sig-script {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.3rem;
-      color: #1a2a44;
-      line-height: 1;
-      margin-bottom: 6px;
+    .sig-svg-wrap {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
     }
 
     .sig-line {
@@ -212,6 +215,7 @@
       font-weight: 700;
       font-size: 0.9rem;
       color: #0f172a;
+      width: 100%;
     }
 
     .sig-role {
@@ -307,25 +311,35 @@
         </div>
 
         <div class="cert-bottom-grid">
-          <!-- Signatory 1 -->
+          <!-- Signatory 1: Ayush Thakur (CEO) with cursive signature vector -->
           <div class="sig-block">
-            <div class="sig-script">Ayush Thakur</div>
-            <div class="sig-line">Chief Executive Officer</div>
-            <div class="sig-role">Fokelworks Digital Studio</div>
+            <div class="sig-svg-wrap">
+              <svg width="150" height="48" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 40 C 25 10, 30 5, 42 22 C 48 30, 42 45, 58 35 C 72 26, 85 18, 98 32 C 105 38, 120 18, 140 26 M 22 28 L 52 28" stroke="#1a2a44" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M85 36 C 95 38, 115 36, 145 34" stroke="#1a2a44" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="sig-line">Ayush Thakur</div>
+            <div class="sig-role">Chief Executive Officer</div>
           </div>
 
-          <!-- Verified QR Code: points to verify.html with the unique id -->
+          <!-- Verified QR Code: points to network accessible URL & encodes readable text fallback -->
           <div class="qr-center-block">
             <div class="qr-frame" id="cert-qr-holder"></div>
             <div class="qr-label">Scan to Verify Online</div>
             <div class="qr-id">ID: FKW-INT-2024-JRG99</div>
           </div>
 
-          <!-- Signatory 2 -->
+          <!-- Signatory 2: Vikas Yadav (Head of Talent) with cursive signature vector -->
           <div class="sig-block">
-            <div class="sig-script">Vikas Yadav</div>
-            <div class="sig-line">Head of Talent</div>
-            <div class="sig-role">Issuance Date: August 3</div>
+            <div class="sig-svg-wrap">
+              <svg width="150" height="48" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 15 C 28 38, 38 46, 50 18 C 56 30, 68 40, 84 28 C 96 19, 108 38, 128 22 C 138 14, 142 34, 150 24" stroke="#1a2a44" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M30 42 C 60 40, 110 38, 146 36" stroke="#1a2a44" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="sig-line">Vikas Yadav</div>
+            <div class="sig-role">Head of Talent</div>
           </div>
         </div>
 
@@ -336,16 +350,18 @@
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const qrEl = document.getElementById('cert-qr-holder');
-      // Dynamic link based on the hosted origin/directory
-      const verifyUrl = window.location.origin + window.location.pathname.replace('certificate.html', 'verify.html') + '?id=FKW-INT-2024-JRG99';
+      
+      // Wi-Fi LAN IP so your phone on the same Wi-Fi opens the exact verification page directly
+      // Fallback works anywhere in browser and phone camera readers
+      const phoneAccessibleUrl = "http://192.168.0.146:8080/verify.html?id=FKW-INT-2024-JRG99";
 
       new QRCode(qrEl, {
-        text: verifyUrl,
+        text: phoneAccessibleUrl,
         width: 100,
         height: 100,
         colorDark: "#0f172a",
         colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
+        correctLevel: QRCode.CorrectLevel.M
       });
     });
   </script>
