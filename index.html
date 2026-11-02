@@ -58,7 +58,19 @@
     }
     nav a:hover, nav a.active { color: #fff; }
 
-    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .nav-actions { display: flex; align-items: center; gap: 1.2rem; }
+
+    .nav-phone {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ff9068;
+    }
+    .nav-phone:hover {
+      color: #fff;
+    }
 
     .btn-outline {
       padding: 0.65rem 1.4rem;
@@ -136,7 +148,7 @@
     }
     .section-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; }
 
-    /* Internship Callout Banner */
+    /* Neutral Certificate Callout Banner */
     .cert-callout {
       background: linear-gradient(135deg, rgba(255, 75, 31, 0.1) 0%, rgba(20, 20, 25, 0.8) 100%);
       border: 1px solid rgba(255, 75, 31, 0.35);
@@ -200,7 +212,7 @@
     .service-card h3 { font-size: 1.35rem; margin-bottom: 0.75rem; font-weight: 700; }
     .service-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-    /* Contact Section (Exact match with screenshot) */
+    /* Contact Section (Exact match with screenshot and phone added) */
     .contact-container {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -250,9 +262,14 @@
       font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--text-muted); margin-bottom: 10px; font-weight: 700;
     }
+    .direct-card-phone {
+      font-size: 1.35rem; font-weight: 700; display: block;
+      color: #ff9068; margin-bottom: 10px;
+    }
+    .direct-card-phone:hover { color: #fff; }
     .direct-card-email {
-      font-size: 1.35rem; font-weight: 700; word-break: break-all;
-      display: flex; align-items: center; gap: 10px;
+      font-size: 1.15rem; font-weight: 600; word-break: break-all;
+      display: flex; align-items: center; gap: 8px; color: #e2e8f0;
     }
     .direct-card-email:hover { color: #ff9068; }
 
@@ -280,13 +297,13 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#work">Case Studies</a>
-      <a href="#certificate">Internship Verification</a>
+      <a href="verify.html">Certificate Verification</a>
       <a href="#contact">Contact</a>
     </nav>
 
     <div class="nav-actions">
-      <!-- Direct working link to the verification page -->
-      <a href="verify.html" class="btn-primary">Verify Credential &rarr;</a>
+      <a href="tel:+919289539957" class="nav-phone">📞 +91 92895 39957</a>
+      <a href="verify.html" class="btn-primary">Verify Certificate &rarr;</a>
     </div>
   </header>
 
@@ -300,9 +317,8 @@
     <p>Fokelworks pairs forward-thinking strategy, world-class design, and high-performance engineering to build transformative experiences.</p>
     
     <div class="hero-btns">
-      <!-- Working Action Button taking the user directly to Janak's verification page -->
-      <a href="verify.html" class="btn-primary">View Janak Raj Goyal's Verified Certificate &rarr;</a>
-      <a href="#contact" class="btn-outline">Start Project &darr;</a>
+      <a href="verify.html" class="btn-primary">Official Verification Portal &rarr;</a>
+      <a href="certificate.html" class="btn-outline">View Certificate Page</a>
     </div>
   </section>
 
@@ -310,15 +326,15 @@
   <section id="certificate">
     <div class="cert-callout">
       <div class="cert-callout-text">
-        <div class="section-tag">Official Registry Verification</div>
-        <h2>Janak Raj Goyal &mdash; Internship Credential</h2>
+        <div class="section-tag">Registry Verification</div>
+        <h2>Verify Internship Credentials</h2>
         <p>
-          Verified record of internship completion at <strong>Fokelworks</strong> from <strong>June 3 to August 3</strong> in Full Stack Web Development & Systems. Available with instant QR code online verification and printable certificate.
+          Official verification portal for certified alumni and interns of <strong>Fokelworks</strong>. Enter your unique Certificate ID to authenticate records, view completion details, and access verifiable digital credentials.
         </p>
       </div>
       <div>
         <a href="verify.html" class="btn-primary" style="padding: 1rem 2rem; font-size: 0.95rem;">
-          Open Verification Page &rarr;
+          Enter Verification ID &rarr;
         </a>
       </div>
     </div>
@@ -393,7 +409,7 @@
     </div>
   </section>
 
-  <!-- Contact & Request Callback (Exact Fokelworks screenshot) -->
+  <!-- Contact & Request Callback (Fokelworks details) -->
   <section id="contact">
     <div class="section-header">
       <div class="section-tag">Get In Touch</div>
@@ -403,7 +419,7 @@
     <div class="contact-container">
       <div class="contact-left">
         <h3>Tell Us About Your Project</h3>
-        <form onsubmit="event.preventDefault(); alert('Your callback request has been registered! Our team will get back to you shortly.');">
+        <form onsubmit="event.preventDefault(); alert('Your callback request has been registered! Our team will contact you shortly.');">
           <div class="form-group">
             <label>Select an option...</label>
             <select class="form-control" required>
@@ -431,8 +447,11 @@
 
         <div class="direct-card">
           <div class="direct-card-label">Or reach us directly</div>
+          <a href="tel:+919289539957" class="direct-card-phone">
+            📞 +91 92895 39957
+          </a>
           <a href="mailto:info@fokelworks.com" class="direct-card-email">
-            info@fokelworks.com <span>&nearr;</span>
+            ✉️ info@fokelworks.com <span>&nearr;</span>
           </a>
         </div>
       </div>
@@ -440,7 +459,7 @@
   </section>
 
   <footer>
-    &copy; 2026 Fokelworks (www.fokelworks.com). All rights reserved. &bull; Credential verified for <a href="verify.html" style="color:#ff9068; text-decoration: underline;">Janak Raj Goyal</a>
+    &copy; 2026 Fokelworks (www.fokelworks.com). All rights reserved. &bull; Tel: <a href="tel:+919289539957" style="color:#ff9068;">+91 92895 39957</a> &bull; <a href="verify.html" style="color:var(--text-muted); text-decoration: underline;">Registry Verification</a>
   </footer>
 
 </body>

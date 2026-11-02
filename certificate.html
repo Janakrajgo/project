@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificate of Internship — Janak Raj Goyal</title>
+  <title>Certificate of Internship | Fokelworks Official Registry</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -15,7 +16,7 @@
     }
 
     body {
-      background: #111216;
+      background: #09090b;
       font-family: 'Plus Jakarta Sans', sans-serif;
       display: flex;
       flex-direction: column;
@@ -23,18 +24,20 @@
       justify-content: center;
       min-height: 100vh;
       padding: 40px 20px;
+      color: #fff;
     }
 
     .toolbar {
       display: flex;
-      gap: 15px;
+      gap: 14px;
       margin-bottom: 25px;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
     }
 
     .btn {
-      padding: 10px 22px;
+      padding: 11px 22px;
       border-radius: 6px;
       font-weight: 700;
       font-size: 0.88rem;
@@ -47,31 +50,30 @@
       border: none;
     }
 
-    .btn-print {
+    .btn-primary {
       background: #ff4b1f;
       color: #fff;
     }
-    .btn-print:hover {
+    .btn-primary:hover {
       background: #e03a10;
       transform: translateY(-2px);
     }
 
-    .btn-back {
-      background: rgba(255, 255, 255, 0.1);
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.08);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    .btn-back:hover {
-      background: rgba(255, 255, 255, 0.2);
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.18);
     }
 
-    /* Certificate Canvas */
     .cert-wrapper {
       width: 1050px;
       max-width: 100%;
       background: #ffffff;
       padding: 24px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
       position: relative;
     }
 
@@ -91,7 +93,6 @@
         repeating-linear-gradient(45deg, rgba(26, 42, 68, 0.015) 0px, rgba(26, 42, 68, 0.015) 2px, transparent 2px, transparent 6px);
     }
 
-    /* Ornamental Corners */
     .corner {
       position: absolute;
       width: 55px;
@@ -104,7 +105,6 @@
     .corner-bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
     .corner-br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
 
-    /* Header */
     .cert-brand {
       display: flex;
       flex-direction: column;
@@ -121,9 +121,7 @@
       letter-spacing: -0.03em;
       color: #0b1220;
     }
-    .brand-logo span {
-      color: #ff4b1f;
-    }
+    .brand-logo span { color: #ff4b1f; }
 
     .brand-tagline {
       font-size: 0.72rem;
@@ -153,7 +151,6 @@
       margin-bottom: 16px;
     }
 
-    /* Recipient */
     .recipient-wrap {
       text-align: center;
       margin: 12px 0 20px;
@@ -170,7 +167,6 @@
       letter-spacing: 0.04em;
     }
 
-    /* Statement / Body */
     .cert-statement {
       max-width: 780px;
       margin: 0 auto 30px;
@@ -179,11 +175,7 @@
       line-height: 1.85;
       color: #334155;
     }
-
-    .cert-statement strong {
-      color: #0f172a;
-      font-weight: 700;
-    }
+    .cert-statement strong { color: #0f172a; font-weight: 700; }
 
     .highlight-pill {
       background: rgba(255, 75, 31, 0.08);
@@ -193,7 +185,6 @@
       font-weight: 700;
     }
 
-    /* Footer with QR and signatures */
     .cert-bottom-grid {
       display: flex;
       align-items: flex-end;
@@ -246,12 +237,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
-    .qr-frame img {
-      width: 100px;
-      height: 100px;
-      display: block;
-    }
-
     .qr-label {
       font-size: 0.68rem;
       font-weight: 800;
@@ -263,43 +248,30 @@
 
     .qr-id {
       font-family: monospace;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       color: #64748b;
       margin-top: 2px;
     }
 
     @media print {
-      body {
-        background: #ffffff;
-        padding: 0;
-      }
-      .toolbar {
-        display: none !important;
-      }
-      .cert-wrapper {
-        box-shadow: none;
-        width: 100%;
-        max-width: 100%;
-        padding: 0;
-      }
-      @page {
-        size: landscape;
-        margin: 1cm;
-      }
+      body { background: #ffffff; padding: 0; }
+      .toolbar { display: none !important; }
+      .cert-wrapper { box-shadow: none; width: 100%; max-width: 100%; padding: 0; }
+      @page { size: landscape; margin: 1cm; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Action Toolbar -->
+  <!-- Action Toolbar -->
   <div class="toolbar">
-    <button class="btn btn-print" onclick="window.print()">
+    <button class="btn btn-primary" onclick="window.print()">
       🖨️ Print / Save as PDF
     </button>
-    <a href="verify.html" class="btn btn-back">
-      🔍 Live Verification Page
+    <a href="verify.html?id=FKW-INT-2024-JRG99" class="btn btn-outline">
+      🔍 Open Verification Page
     </a>
-    <a href="index.html" class="btn btn-back">
+    <a href="index.html" class="btn btn-outline">
       🏠 Fokelworks Home
     </a>
   </div>
@@ -308,13 +280,12 @@
   <div class="cert-wrapper">
     <div class="cert-outer-border">
       <div class="cert-inner-border">
-        <!-- Golden Corner Accents -->
+        
         <div class="corner corner-tl"></div>
         <div class="corner corner-tr"></div>
         <div class="corner corner-bl"></div>
         <div class="corner corner-br"></div>
 
-        <!-- Header -->
         <div class="cert-brand">
           <div class="brand-logo">
             <span>fokel</span>works
@@ -325,19 +296,16 @@
         <div class="cert-main-title">Certificate of Internship</div>
         <div class="cert-sub-title">This is to officially certify that</div>
 
-        <!-- Recipient -->
         <div class="recipient-wrap">
           <div class="recipient-name">JANAK RAJ GOYAL</div>
         </div>
 
-        <!-- Description text -->
         <div class="cert-statement">
           has successfully and meritoriously completed an intensive summer internship in <span class="highlight-pill">Full Stack Web Development & Digital Engineering</span> from <strong>June 3</strong> to <strong>August 3</strong> under the mentorship and supervision of <strong>Fokelworks</strong>.
           <br><br>
           During their tenure, they actively contributed to production web platforms, user-centric interfaces, and software architecture, exhibiting exemplary commitment, diligence, and engineering problem-solving.
         </div>
 
-        <!-- Signatures & Authentic QR Seal -->
         <div class="cert-bottom-grid">
           <!-- Signatory 1 -->
           <div class="sig-block">
@@ -346,12 +314,9 @@
             <div class="sig-role">Fokelworks Digital Studio</div>
           </div>
 
-          <!-- Verified QR Code -->
+          <!-- Verified QR Code: points to verify.html with the unique id -->
           <div class="qr-center-block">
-            <div class="qr-frame">
-              <!-- QR Code encoding the live verification URL and verification code -->
-              <img id="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.fokelworks.com%2Fverify%3Fid%3DFKW-INT-2024-JRG99%26student%3DJanak%2BRaj%2BGoyal%26from%3DJune%2B3%26to%3DAugust%2B3" alt="Verification QR Code" />
-            </div>
+            <div class="qr-frame" id="cert-qr-holder"></div>
             <div class="qr-label">Scan to Verify Online</div>
             <div class="qr-id">ID: FKW-INT-2024-JRG99</div>
           </div>
@@ -359,7 +324,7 @@
           <!-- Signatory 2 -->
           <div class="sig-block">
             <div class="sig-script">Elena Rostova</div>
-            <div class="sig-line">Head of Talent & Programs</div>
+            <div class="sig-line">Head of Talent</div>
             <div class="sig-role">Issuance Date: August 3</div>
           </div>
         </div>
@@ -369,19 +334,20 @@
   </div>
 
   <script>
-    // Point QR code to local verify page if opened directly in file/local environment
     window.addEventListener('DOMContentLoaded', () => {
-      const currentOrigin = window.location.origin;
-      let targetVerifyUrl = 'https://www.fokelworks.com/verify?id=FKW-INT-2024-JRG99&student=Janak+Raj+Goyal&duration=June+3+to+August+3';
-      
-      if (window.location.protocol.startsWith('http')) {
-        targetVerifyUrl = currentOrigin + window.location.pathname.replace('certificate.html', 'verify.html') + '?id=FKW-INT-2024-JRG99';
-      }
-      
-      const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(targetVerifyUrl);
-      document.getElementById('qr-img').src = qrApiUrl;
+      const qrEl = document.getElementById('cert-qr-holder');
+      // Dynamic link based on the hosted origin/directory
+      const verifyUrl = window.location.origin + window.location.pathname.replace('certificate.html', 'verify.html') + '?id=FKW-INT-2024-JRG99';
+
+      new QRCode(qrEl, {
+        text: verifyUrl,
+        width: 100,
+        height: 100,
+        colorDark: "#0f172a",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
     });
   </script>
 </body>
 </html>
-
