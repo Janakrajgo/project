@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fokel — Digital Studio & Creative Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --card-bg: #111113;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #ff4b1f;
+      --accent-grad: linear-gradient(135deg, #ff4b1f 0%, #ff9068 100%);
+      --text-main: #f4f4f5;
+      --text-muted: #94949e;
+      --primary-font: 'Plus Jakarta Sans', sans-serif;
+      --display-font: 'Space Grotesk', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--primary-font);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      height: 76px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 4%;
+      background: rgba(9, 9, 11, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 1.65rem; font-weight: 800; letter-spacing: -0.04em;
+    }
+    .logo span.orange { color: #ff4b1f; }
+
+    nav { display: flex; align-items: center; gap: 2rem; }
+    nav a {
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted);
+      transition: color 0.25s ease;
+    }
+    nav a:hover, nav a.active { color: #fff; }
+
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+
+    .btn-outline {
+      padding: 0.65rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+      text-transform: uppercase; transition: all 0.25s ease;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-outline:hover {
+      background: #fff; color: #000; border-color: #fff;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.7rem;
+      background: #fff; color: #000;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; border-radius: 4px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.25s ease; border: none; cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: #ff4b1f; color: #fff;
+      box-shadow: 0 8px 25px rgba(255, 75, 31, 0.35);
+      transform: translateY(-2px);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 88vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 140px 6% 60px;
+      position: relative;
+      background: radial-gradient(circle at 50% 25%, rgba(255, 75, 31, 0.14) 0%, rgba(9, 9, 11, 0) 70%);
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      font-size: 0.8rem; font-weight: 500; color: #ff9068;
+      margin-bottom: 1.5rem;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #ff4b1f; box-shadow: 0 0 10px #ff4b1f;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5.8vw, 5.2rem);
+      font-weight: 800; line-height: 1.08; letter-spacing: -0.04em;
+      max-width: 980px; margin-bottom: 1.8rem;
+    }
+    .hero h1 span {
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem; color: var(--text-muted);
+      max-width: 680px; margin-bottom: 2.5rem;
+    }
+
+    .hero-btns { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+
+    /* Sections */
+    section { padding: 90px 6%; max-width: 1300px; margin: 0 auto; }
+    .section-header { margin-bottom: 45px; }
+    .section-tag {
+      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: #ff4b1f; font-weight: 700; margin-bottom: 8px;
+    }
+    .section-title { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; }
+
+    /* Internship Callout Banner */
+    .cert-callout {
+      background: linear-gradient(135deg, rgba(255, 75, 31, 0.1) 0%, rgba(20, 20, 25, 0.8) 100%);
+      border: 1px solid rgba(255, 75, 31, 0.35);
+      border-radius: 16px;
+      padding: 40px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 30px;
+      margin: 40px 0;
+    }
+    .cert-callout-text h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+    .cert-callout-text p { color: var(--text-muted); max-width: 640px; font-size: 0.95rem; }
+
+    /* Live Interactive Project Showcase */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+    .work-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      display: flex; flex-direction: column; justify-content: space-between;
+      height: 100%;
+    }
+    .work-card:hover {
+      border-color: rgba(255, 75, 31, 0.5);
+      transform: translateY(-4px);
+    }
+    .work-tag {
+      font-size: 0.75rem; color: #ff9068; text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 12px; font-weight: 600;
+    }
+    .work-card h3 { font-size: 1.35rem; margin-bottom: 10px; font-weight: 700; }
+    .work-card p { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 20px; }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+    .service-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2.2rem;
+      transition: all 0.3s ease;
+    }
+    .service-card:hover {
+      border-color: rgba(255, 75, 31, 0.4);
+      transform: translateY(-5px);
+    }
+    .service-card .num {
+      font-family: var(--display-font);
+      font-size: 1.5rem; font-weight: 700; color: rgba(255, 255, 255, 0.2);
+      margin-bottom: 1rem;
+    }
+    .service-card h3 { font-size: 1.35rem; margin-bottom: 0.75rem; font-weight: 700; }
+    .service-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* Contact Section (Exact match with screenshot) */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      background: #0d0e12;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 30px;
+    }
+    .contact-left { padding: 50px 45px; }
+    .contact-left h3 { font-size: 1.6rem; margin-bottom: 25px; font-weight: 700; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.75rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 8px; font-weight: 600;
+    }
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 6px; padding: 13px 16px;
+      color: #fff; font-family: inherit; font-size: 0.95rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-control:focus { border-color: #ff4b1f; }
+    textarea.form-control { resize: vertical; min-height: 110px; }
+
+    .contact-right {
+      background: #ff4b1f; color: #fff;
+      padding: 50px 40px; display: flex; flex-direction: column;
+      justify-content: space-between; position: relative; overflow: hidden;
+    }
+    .contact-right::before {
+      content: "TALK TALK";
+      position: absolute; top: 15px; right: -20px;
+      font-size: 5rem; font-weight: 900;
+      color: rgba(0, 0, 0, 0.08); line-height: 0.85;
+      pointer-events: none; white-space: nowrap;
+    }
+    .direct-card {
+      background: #0b0c10; color: #fff;
+      padding: 30px; border-radius: 12px; margin-top: auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .direct-card-label {
+      font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px; font-weight: 700;
+    }
+    .direct-card-email {
+      font-size: 1.35rem; font-weight: 700; word-break: break-all;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .direct-card-email:hover { color: #ff9068; }
+
+    footer {
+      padding: 40px 6%; text-align: center;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted); font-size: 0.85rem;
+    }
+
+    @media (max-width: 860px) {
+      .contact-container { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="index.html" class="logo">
+      <span class="orange">fokel</span><span>works</span>
+    </a>
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#work">Case Studies</a>
+      <a href="#certificate">Internship Verification</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      <!-- Direct working link to the verification page -->
+      <a href="verify.html" class="btn-primary">Verify Credential &rarr;</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Digital Studio &bull; Creative Engineering &bull; Production Ready
+    </div>
+    <h1>We craft next-gen <span>digital products</span> and scalable platforms.</h1>
+    <p>Fokelworks pairs forward-thinking strategy, world-class design, and high-performance engineering to build transformative experiences.</p>
+    
+    <div class="hero-btns">
+      <!-- Working Action Button taking the user directly to Janak's verification page -->
+      <a href="verify.html" class="btn-primary">View Janak Raj Goyal's Verified Certificate &rarr;</a>
+      <a href="#contact" class="btn-outline">Start Project &darr;</a>
+    </div>
+  </section>
+
+  <!-- Official Internship Highlight & Verification -->
+  <section id="certificate">
+    <div class="cert-callout">
+      <div class="cert-callout-text">
+        <div class="section-tag">Official Registry Verification</div>
+        <h2>Janak Raj Goyal &mdash; Internship Credential</h2>
+        <p>
+          Verified record of internship completion at <strong>Fokelworks</strong> from <strong>June 3 to August 3</strong> in Full Stack Web Development & Systems. Available with instant QR code online verification and printable certificate.
+        </p>
+      </div>
+      <div>
+        <a href="verify.html" class="btn-primary" style="padding: 1rem 2rem; font-size: 0.95rem;">
+          Open Verification Page &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work / Case Studies -->
+  <section id="work">
+    <div class="section-header">
+      <div class="section-tag">Featured Work</div>
+      <h2 class="section-title">Engineered For Performance</h2>
+    </div>
+
+    <div class="work-grid">
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Fintech &bull; Web Application</div>
+          <h3>Apex Global Pay</h3>
+          <p>Real-time cross-border settlements portal featuring sub-50ms transaction latency, automated compliance checks, and ultra-secure UI.</p>
+        </div>
+        <div>
+          <a href="#contact" class="btn-outline" style="font-size: 0.75rem; padding: 6px 14px;">Case Study &rarr;</a>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Design Systems &bull; Enterprise</div>
+          <h3>HyperScale Cloud</h3>
+          <p>Complete multi-brand design system and component architecture deployed across 14 enterprise SaaS products.</p>
+        </div>
+        <div>
+          <a href="#contact" class="btn-outline" style="font-size: 0.75rem; padding: 6px 14px;">Case Study &rarr;</a>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div>
+          <div class="work-tag">Digital Platform &bull; Mobile & Web</div>
+          <h3>Vanguard Mobility</h3>
+          <p>Interactive fleet telemetry dashboard with live WebSocket telemetry, predictive diagnostics, and map integration.</p>
+        </div>
+        <div>
+          <a href="#contact" class="btn-outline" style="font-size: 0.75rem; padding: 6px 14px;">Case Study &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <div class="section-header">
+      <div class="section-tag">Our Capabilities</div>
+      <h2 class="section-title">What We Build</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="num">01</div>
+        <h3>Web & Digital Platforms</h3>
+        <p>Bespoke web applications, lightning-fast portals, and high-conversion enterprise interfaces built with modern technology stacks.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">02</div>
+        <h3>Creative UX / UI Design</h3>
+        <p>User-obsessed product discovery, wireframing, high-fidelity prototypes, and sleek modern design languages.</p>
+      </div>
+      <div class="service-card">
+        <div class="num">03</div>
+        <h3>Engineering Mentorship</h3>
+        <p>Hands-on mentorship, industry-level talent acceleration, and modern production deployments across web and cloud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Request Callback (Exact Fokelworks screenshot) -->
+  <section id="contact">
+    <div class="section-header">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Request a Callback</h2>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-left">
+        <h3>Tell Us About Your Project</h3>
+        <form onsubmit="event.preventDefault(); alert('Your callback request has been registered! Our team will get back to you shortly.');">
+          <div class="form-group">
+            <label>Select an option...</label>
+            <select class="form-control" required>
+              <option value="">Select an option...</option>
+              <option value="web">Web & Digital Platform Engineering</option>
+              <option value="intern">Internship Verification & Talent Registry</option>
+              <option value="consulting">Digital Strategy & Consultation</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control" placeholder="Tell us about your goals or questions..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">
+            REQUEST A CALLBACK &rarr;
+          </button>
+        </form>
+      </div>
+
+      <div class="contact-right">
+        <div>
+          <h2 style="font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 12px;">READY TO ELEVATE YOUR VISION?</h2>
+          <p style="opacity: 0.9; font-size: 0.95rem;">Join the growing list of brands and leaders partnering with Fokelworks.</p>
+        </div>
+
+        <div class="direct-card">
+          <div class="direct-card-label">Or reach us directly</div>
+          <a href="mailto:info@fokelworks.com" class="direct-card-email">
+            info@fokelworks.com <span>&nearr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Fokelworks (www.fokelworks.com). All rights reserved. &bull; Credential verified for <a href="verify.html" style="color:#ff9068; text-decoration: underline;">Janak Raj Goyal</a>
+  </footer>
+
+</body>
+</html>
