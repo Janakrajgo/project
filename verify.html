@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- jsPDF & html2canvas for instant 1-click perfect PDF download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
       --bg: #09090b;
@@ -547,9 +550,10 @@
           id="cert-id-input" 
           class="search-input" 
           placeholder="ENTER ID (e.g. FKW-INT-2024-JRG99)" 
-          value=""
+          value="FKW-INT-2024-JRG99"
+          onkeydown="if(event.key==='Enter') handleSearch()"
         />
-        <button class="btn-verify" onclick="handleSearch()">Verify ID &rarr;</button>
+        <button type="button" class="btn-verify" onclick="handleSearch()">Verify ID &rarr;</button>
       </div>
 
       <div class="hint-text">
@@ -613,8 +617,8 @@
             </p>
           </div>
           <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px;">
-            <button class="btn btn-primary" onclick="window.print()" style="justify-content: center;">
-              Print / Save Certificate
+            <button class="btn btn-primary" id="btn-verify-download" onclick="downloadVerifyCertPDF()" style="justify-content: center;">
+              📥 Download PDF Certificate
             </button>
             <button class="btn btn-outline" onclick="copyVerifyUrl()" style="justify-content: center;">
               Copy Verification Link
@@ -718,7 +722,9 @@
     }
 
     function handleSearch() {
-      const input = document.getElementById('cert-id-input').value.trim().toUpperCase();
+      let raw = document.getElementById('cert-id-input').value || '';
+      // Sanitize: strip whitespace and match uppercase
+      const input = raw.replace(/\s+/g, '').toUpperCase();
       const errBox = document.getElementById('error-message');
       const resContainer = document.getElementById('result-container');
 
@@ -738,31 +744,33 @@
         document.getElementById('res-id').textContent = input;
         document.getElementById('res-qr-id').textContent = 'Ref: ' + input;
 
-        // Render QR that is 100% reliably scannable from mobile phones
+        // Render QR with permanent live world-accessible URL
         const qrEl = document.getElementById('qr-target');
-        qrEl.innerHTML = '';
-        
-        // Use LAN Wi-Fi IP if local, so phone camera never gets ERR_CONNECTION_REFUSED
-        let hostDomain = window.location.host;
-        if (hostDomain.includes('localhost') || hostDomain.includes('127.0.0.1')) {
-          hostDomain = '192.168.0.146:8080';
+        if (qrEl) {
+          qrEl.innerHTML = '';
+          const globalVerifyUrl = "https://htmlpreview.github.io/?https://github.com/Janakrajgo/project/blob/gh-pages/verify.html";
+
+          try {
+            new QRCode(qrEl, {
+              text: globalVerifyUrl,
+              width: 96,
+              height: 96,
+              colorDark: "#000000",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.M
+            });
+          } catch(e) {
+            console.error('QR render error:', e);
+          }
         }
-        const verifyLink = 'http://' + hostDomain + '/verify.html?id=' + encodeURIComponent(input);
-        
-        new QRCode(qrEl, {
-          text: verifyLink,
-          width: 96,
-          height: 96,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.M
-        });
 
         resContainer.classList.add('active');
+        // Scroll smoothly to verified record
+        resContainer.scrollIntoView({ behavior: 'smooth' });
       } else {
         resContainer.classList.remove('active');
         errBox.style.display = 'block';
-        errBox.textContent = `No record found for ID: "${input}". Please enter a valid Fokelworks Certificate ID.`;
+        errBox.textContent = `No record found for ID: "${raw}". Please enter a valid Fokelworks Certificate ID.`;
       }
     }
 
@@ -773,14 +781,57 @@
       alert('Verification URL copied to clipboard: ' + url);
     }
 
-    // Auto-verify if ?id= query param is provided in URL
+    // Direct 1-Click PDF download function
+    async function downloadVerifyCertPDF() {
+      const btn = document.getElementById('btn-verify-download');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Generating PDF...';
+      btn.disabled = true;
+
+      try {
+        const certElement = document.querySelector('.certificate-paper');
+        const canvas = await html2canvas(certElement, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'landscape',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        const pdfWidth = 297;
+        const pdfHeight = 210;
+        const margin = 10;
+        const printWidth = pdfWidth - (margin * 2);
+        const printHeight = (canvas.height * printWidth) / canvas.width;
+        const yOffset = (pdfHeight - printHeight) / 2;
+
+        pdf.addImage(imgData, 'PNG', margin, yOffset > 0 ? yOffset : margin, printWidth, printHeight);
+        pdf.save('Janak_Raj_Goyal_Fokelworks_Certificate.pdf');
+      } catch (err) {
+        console.error(err);
+        window.print();
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    // Automatically verify on page load if query param present or default demo ID is set
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const queryId = params.get('id');
       if (queryId) {
         document.getElementById('cert-id-input').value = queryId;
-        handleSearch();
       }
+      // Automatically execute verification so the user doesn't get stuck on the search box
+      handleSearch();
     });
   </script>
 </body>

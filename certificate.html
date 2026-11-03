@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <!-- jsPDF & html2canvas for instant 1-click perfect PDF download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -178,10 +181,10 @@
     .cert-statement strong { color: #0f172a; font-weight: 700; }
 
     .highlight-pill {
-      background: rgba(255, 75, 31, 0.08);
-      color: #ff4b1f;
-      padding: 2px 10px;
-      border-radius: 4px;
+      background: transparent;
+      color: #0f172a;
+      padding: 0;
+      border-radius: 0;
       font-weight: 700;
     }
 
@@ -369,8 +372,11 @@
 
   <!-- Action Toolbar -->
   <div class="toolbar">
-    <button class="btn btn-primary" onclick="window.print()">
-      🖨️ Print / Save as PDF
+    <button class="btn btn-primary" id="btn-download-pdf" onclick="downloadCertificatePDF()">
+      📥 Download PDF Certificate
+    </button>
+    <button class="btn btn-outline" onclick="window.print()">
+      🖨️ Print Dialog
     </button>
     <a href="verify.html?id=FKW-INT-2024-JRG99" class="btn btn-outline">
       🔍 Open Verification Page
@@ -405,7 +411,7 @@
         </div>
 
         <div class="cert-statement">
-          has successfully and meritoriously completed an intensive summer internship in <span class="highlight-pill">Full Stack Web Development & Digital Engineering</span> from <strong>June 3</strong> to <strong>August 3</strong> under the mentorship and supervision of <strong>Fokelworks</strong>.
+          has successfully and meritoriously completed an intensive summer internship in <strong>Full Stack Web Development & Digital Engineering</strong> from <strong>June 3</strong> to <strong>August 3</strong> under the mentorship and supervision of <strong>Fokelworks</strong>.
           <br><br>
           During their tenure, they actively contributed to production web platforms, user-centric interfaces, and software architecture, exhibiting exemplary commitment, diligence, and engineering problem-solving.
         </div>
@@ -455,18 +461,68 @@
   </div>
 
   <script>
+    // 1-Click Perfect High-Resolution Landscape PDF Generator
+    async function downloadCertificatePDF() {
+      const btn = document.getElementById('btn-download-pdf');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Generating PDF...';
+      btn.disabled = true;
+
+      try {
+        const certElement = document.querySelector('.cert-wrapper');
+        
+        // Render crisp canvas at 2x scale
+        const canvas = await html2canvas(certElement, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        
+        // A4 Landscape: 297mm width x 210mm height
+        const pdf = new jsPDF({
+          orientation: 'landscape',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        const pdfWidth = 297;
+        const pdfHeight = 210;
+
+        // Perfect margin fitting
+        const margin = 10;
+        const printWidth = pdfWidth - (margin * 2);
+        const printHeight = (canvas.height * printWidth) / canvas.width;
+        
+        // Center vertically
+        const yOffset = (pdfHeight - printHeight) / 2;
+
+        pdf.addImage(imgData, 'PNG', margin, yOffset > 0 ? yOffset : margin, printWidth, printHeight);
+        pdf.save('Janak_Raj_Goyal_Fokelworks_Internship_Certificate.pdf');
+      } catch (err) {
+        console.error('PDF generation error:', err);
+        // Fallback to native print
+        window.print();
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       const qrEl = document.getElementById('cert-qr-holder');
       
-      // Wi-Fi LAN IP so your phone on the same Wi-Fi opens the exact verification page directly
-      // Fallback works anywhere in browser and phone camera readers
-      const phoneAccessibleUrl = "http://192.168.0.146:8080/verify.html?id=FKW-INT-2024-JRG99";
+      // Permanent world-accessible HTTPS verification URL that opens rendered live verification page directly on any phone
+      const globalVerifyUrl = "https://htmlpreview.github.io/?https://github.com/Janakrajgo/project/blob/gh-pages/verify.html";
 
       new QRCode(qrEl, {
-        text: phoneAccessibleUrl,
-        width: 100,
-        height: 100,
-        colorDark: "#0f172a",
+        text: globalVerifyUrl,
+        width: 104,
+        height: 104,
+        colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.M
       });
