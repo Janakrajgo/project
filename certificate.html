@@ -259,89 +259,108 @@
 
     @media print {
       @page {
-        size: landscape;
-        margin: 0;
+        size: A4 landscape;
+        margin: 8mm;
       }
       html, body {
-        width: 100%;
-        height: 100%;
+        width: 100% !important;
+        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         background: #ffffff !important;
-        overflow: hidden !important;
+        overflow: visible !important;
       }
       .toolbar {
         display: none !important;
       }
       .cert-wrapper {
         box-shadow: none !important;
-        width: 100vw !important;
-        max-width: 100vw !important;
-        height: 100vh !important;
-        max-height: 100vh !important;
-        padding: 10px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 175mm !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
-        page-break-after: avoid !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
+        display: block !important;
       }
       .cert-outer-border {
-        border-width: 8px !important;
-        padding: 4px !important;
-        height: 100% !important;
+        border-width: 10px !important;
+        border-color: #1a2a44 !important;
+        padding: 6px !important;
         box-sizing: border-box !important;
-        display: flex !important;
-        flex-direction: column !important;
       }
       .cert-inner-border {
-        padding: 18px 30px !important;
-        height: 100% !important;
+        padding: 26px 36px 20px !important;
+        border-width: 2px !important;
         box-sizing: border-box !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
       }
       .cert-brand {
-        margin-bottom: 8px !important;
+        margin-bottom: 12px !important;
+      }
+      .brand-logo {
+        font-size: 1.5rem !important;
+      }
+      .brand-tagline {
+        font-size: 0.68rem !important;
+        margin-top: 3px !important;
       }
       .cert-main-title {
-        font-size: 2.1rem !important;
-        margin: 4px 0 2px !important;
+        font-size: 2.2rem !important;
+        margin: 8px 0 4px !important;
       }
       .cert-sub-title {
-        font-size: 0.85rem !important;
-        margin-bottom: 8px !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 12px !important;
       }
       .recipient-wrap {
-        margin: 6px 0 10px !important;
+        margin: 10px 0 16px !important;
       }
       .recipient-name {
-        font-size: 2.2rem !important;
-        padding: 0 35px 4px !important;
+        font-size: 2.5rem !important;
+        padding: 0 40px 6px !important;
       }
       .cert-statement {
-        font-size: 0.88rem !important;
-        line-height: 1.6 !important;
-        margin: 0 auto 10px !important;
-        max-width: 90% !important;
+        font-size: 0.98rem !important;
+        line-height: 1.75 !important;
+        max-width: 760px !important;
+        margin: 0 auto 24px !important;
       }
       .cert-bottom-grid {
-        margin-top: 10px !important;
+        margin-top: 18px !important;
         padding: 0 10px !important;
       }
+      .sig-block {
+        width: 200px !important;
+      }
+      .sig-svg-wrap {
+        height: 48px !important;
+      }
       .sig-svg-wrap svg {
-        height: 42px !important;
-        width: 135px !important;
+        height: 48px !important;
+        width: 145px !important;
+      }
+      .sig-line {
+        font-size: 0.88rem !important;
+        padding-top: 4px !important;
+      }
+      .sig-role {
+        font-size: 0.72rem !important;
       }
       .qr-frame {
-        padding: 4px !important;
+        padding: 5px !important;
       }
       .qr-frame img, .qr-frame canvas {
-        width: 80px !important;
-        height: 80px !important;
+        width: 82px !important;
+        height: 82px !important;
+      }
+      .qr-label {
+        font-size: 0.65rem !important;
+        margin-top: 4px !important;
+      }
+      .qr-id {
+        font-size: 0.7rem !important;
       }
     }
   </style>
